@@ -1,0 +1,31 @@
+{
+  "_comment": "Apple ID 账号表。每个账号占用钥匙串里一个独立命名空间 + 一份独立 cookie 文件,因此可以同时保持登录。region 字段留空即可,服务启动时会从 ipatool auth info 的 storeFront 自动探测并回填。unfairplay_model 可以省略 —— 默认取 <IPA_MODELS_DIR>/<id>.bin(即 backend/data/models/<id>.bin),用 manage_unfairplay.py 装。",
+  "_setup": [
+    "1. 先编译带多账号支持的 ipatool(见 README「多账号」一节),把路径填进 IPATOOL_BIN",
+    "2. 对每个账号执行下面这条命令登录(首次需要 2FA 验证码):",
+    "   IPATOOL_KEYCHAIN_SERVICE=ipa-manager.<id> IPATOOL_COOKIE_JAR=<cookies 路径> \\",
+    "     ipatool auth login -e <Apple ID> -p <密码>",
+    "3. 重启本服务,region 会自动填上",
+    "4. 装离线解密模型(每份模型只用于对应的那个账号,不需要越狱机):",
+    "   bash tools/build_unfairplay.sh        # 先编译 UnfairPlay",
+    "   python3 manage_unfairplay.py collect <id> --app <Mac上装的iOS应用> --ipa <加密IPA>"
+  ],
+  "accounts": [
+    {
+      "id": "cn",
+      "label": "中国区",
+      "email": "改成你的中国区 Apple ID",
+      "keychain_service": "ipa-manager.cn",
+      "cookie_jar": "backend/data/accounts/cn-cookies",
+      "region": null
+    },
+    {
+      "id": "us",
+      "label": "美国区",
+      "email": "改成你的美国区 Apple ID",
+      "keychain_service": "ipa-manager.us",
+      "cookie_jar": "backend/data/accounts/us-cookies",
+      "region": null
+    }
+  ]
+}

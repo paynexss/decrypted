@@ -1,0 +1,49 @@
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ── 运行时数据:下载产物与数据库 ──────────────────────────────────────────
+backend/storage/encrypted/*
+backend/storage/decrypted/*
+backend/storage/staging/*
+!backend/storage/*/.gitkeep
+backend/data/*.db
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# ── 离线解密材料 ──────────────────────────────────────────────────────────
+#
+# 模型等于「对应 Apple ID 在这台 Mac 上的内容解密能力」,泄露一份等于把该
+# 账号买过的所有 IPA 都送出去。绝不能进版本库。
+#
+# ★ 注意:gitignore **不支持行尾注释** —— 一行里出现 `#` 之后的内容会被当成
+#   pattern 的一部分,规则静默失效。所以下面每条注释都单独占一行。
+backend/data/models/
+backend/data/unfairplay/
+backend/data/bin/
+
+# ── 登录态:ipatool 的 cookie 与会话 ──────────────────────────────────────
+#
+# accounts.json 里每个账号一个 cookie 文件(默认 data/accounts/<id>-cookies),
+# 里面是**有效会话令牌**,拿着就能以该账号身份访问 App Store。
+backend/data/accounts/
+
+# ── 多账号配置:包含 Apple ID 邮箱 ────────────────────────────────────────
+backend/accounts.json
+backend/.env
+
+# ── 编译产物(带多账号补丁的 ipatool、UnfairPlay) ────────────────────────
+backend/vendor/
+
+# ── 前端 ──────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+
+# ── 编辑器 / 系统 ─────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+.playwright-mcp/

@@ -1,0 +1,19 @@
+# 后端依赖
+#
+# 版本下限按本机已验证可用的版本给出;上不封顶,除非将来出现不兼容。
+# 安装:
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+
+fastapi>=0.115
+uvicorn[standard]>=0.30
+httpx>=0.27
+python-multipart>=0.0.9
+pydantic>=2.7
+
+# 说明:
+# - 数据库使用 Python 标准库 sqlite3,不引入 ORM;
+# - 加解密全部交给外部程序,所以这里**不需要** cryptography:
+#     · ipatool  —— 下载加密 IPA(外部二进制)
+#     · unfairplay —— 离线解密(外部二进制,见 tools/build_unfairplay.sh)
+# - 离线解密需要在**收到模型的那台 Mac** 上做过一次 collect(见 README 第九节)。
